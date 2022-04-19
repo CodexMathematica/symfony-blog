@@ -44,9 +44,13 @@ class BlogController extends AbstractController
 
             try{
                 $em->flush();
+                $this->addFlash('success', 'Création d\'un article réussie');
             }catch(Exception $e){
+                $this->addFlash('danger', 'Echec lors de la création d\'un article');
+
                 return $this->redirectToRoute('blog_new');
             }
+
             return $this->redirectToRoute('blog_list');
         }
 
@@ -73,7 +77,13 @@ class BlogController extends AbstractController
     public function delete(Article $article, EntityManagerInterface $em): Response
     {
         $em->remove($article);
-        $em->flush();
+        try {
+            $em->flush();
+            $this->addFlash('success', 'Article supprimé.');
+        }catch(Exception $e) {
+            $this->addFlash('danger', 'Echec lors de la suppression.');
+        }
+        
 
         return $this->redirectToRoute('blog_list');
     }
@@ -90,7 +100,13 @@ class BlogController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
 
             $article->setUpdatedAt(new \DateTime());
-            $em->flush();
+            try {
+                $em->flush();
+                $this->addFlash('success', 'L\'article a bien été modifié.');
+            }catch(Exception $e) {
+                $this->addFlash('danger', 'Echec lors de l\'édition de l\'article.');
+            }
+
             return $this->redirectToRoute('blog_list');
         }
 
