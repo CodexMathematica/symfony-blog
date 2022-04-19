@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use App\Entity\Tag;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,7 +20,15 @@ class FilterType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control'],
-                'mapped' => false
+                'mapped' => false,
+                'required' => false
+            ])
+            ->add('tag', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'attr' => ['class' => 'form-control'],
+                'mapped' => false,
+                'required' => false
             ])
             ->add('dateOrder', ChoiceType::class, [
                 'choices' => [
@@ -27,7 +36,8 @@ class FilterType extends AbstractType
                     'Décroissant' => false
                 ],
                 'mapped' => false,
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'required' => false
             ])
             ->add('send', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary m-4']
