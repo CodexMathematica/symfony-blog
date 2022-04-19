@@ -2,11 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Tag;
 use App\Entity\Article;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
+use App\Entity\Category;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -43,6 +45,42 @@ class ArticleRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Category $category
+     * @param string $order
+     * @param Tag $tag
+     * @return Article[]
+     */
+    public function filterArticle(?Category $category, ?string $order, ?Tag $tag): array
+    {
+        $query = $this->createQueryBuilder('p')
+        ->where('p.isPublished = true');
+
+        if($category)
+        {
+            $query = $query->andWhere('p.category = :category');
+            $query->setParameter('category', $category);
+        }
+
+        if($tag)
+        {
+            $query = $query->andWhere(':tag MEMBER OF p.tags');
+            $query->setParameter('tag', $tag);
+        }
+
+        if($order)
+        {
+            $query = $query->orderBy('p.updatedAt', $order);
+        }
+
+        $finalQuery = $query->getQuery()
+        ->getResult();
+
+        return $finalQuery;
     }
 
     // /**

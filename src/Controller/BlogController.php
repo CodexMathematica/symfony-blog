@@ -28,7 +28,8 @@ class BlogController extends AbstractController
         if($filter->isSubmitted() && $filter->isValid()){
             $category = $filter['category']->getData();
             $order = ($filter['dateOrder']->getData()? 'ASC' : 'DESC');
-            $articles = $repo->findBy(['category' => $category], ['updatedAt' => $order]);
+            $tag = $filter['tag']->getData();
+            $articles = $repo->filterArticle($category, $order, $tag);
         }
 
         return $this->render('blog/list.html.twig', [
