@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1>Liste des articles</h1>
-
+    {{ form_start(filter) }}
+        {{ form_widget(filter) }}
+    {{ form_end(filter) }}
     <div class="row d-flex justify-content-center">
         {% for article in articles %}
             <div class="card text-white bg-primary m-2 col-md-3">
