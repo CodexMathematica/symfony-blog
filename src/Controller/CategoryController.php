@@ -45,7 +45,12 @@ class CategoryController extends AbstractController
     public function delete(EntityManagerInterface $em, Category $cat): Response
     {
         $em->remove($cat);
-        $em->flush();
+        try{
+            $em->flush();
+            $this->addFlash('success', 'Catégorie supprimée.');
+        }catch(Exception $e){
+            $this->addFlash('danger', 'Echec lors de la suppression de la catégorie.');
+        }
 
         return $this->redirectToRoute("category_list");
     }
@@ -67,7 +72,9 @@ class CategoryController extends AbstractController
 
             try{
                 $em->flush();
+                $this->addFlash('success', 'Catégorie créée.');
             }catch(Exception $e){
+                $this->addFlash('danger', 'Echec de la création de la catégorie.');
 
                 return $this->redirectToRoute('category_new');
             }
@@ -91,7 +98,12 @@ class CategoryController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $category->setSlug($category->getName().'-'.rand(100,500));
-            $em->flush();
+            try{
+                $em->flush();
+                $this->addFlash('success', 'Catégorie modifiée.');
+            }catch(Exception $e){
+                $this->addFlash('danger', 'Echec lors de la modification de la catégorie.');
+            }
 
             return $this->redirectToRoute('category_list');
         }
