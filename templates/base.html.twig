@@ -30,6 +30,21 @@
                       <li class="nav-item">
                         <a class="nav-link active" href="{{ path('blog_list') }}">Liste des articles</a>
                       </li>
+                    </ul>
+                    {% if app.user %}
+                      {% if 'ROLE_ADMIN' in app.user.roles %}
+                        <ul class="navbar-nav m-auto">
+                          <li class="nav-item">
+                            <a class="nav-link active" href="{{ path('category_new') }}">Créer une catégorie</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link active" href="{{ path('tag_new') }}">Créer un badge</a>
+                          </li>
+                        </ul>
+                      {% endif %}
+                    {% endif %}
+                    <ul class="navbar-nav ms-auto">
+                      {% if app.user %}
                       <li class="nav-item">
                         <a class="nav-link active" href="{{ path('blog_new') }}">Créer un article</a>
                       </li>
@@ -37,15 +52,19 @@
                         <a class="nav-link active" href="{{ path('category_list') }}">Liste des catégories</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link active" href="{{ path('category_new') }}">Créer une catégorie</a>
-                      </li>
-                      <li class="nav-item">
                         <a class="nav-link active" href="{{ path('tag_list') }}">Liste des badges</a>
                       </li>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="{{ path('app_logout') }}">Déconnexion</a>
+                        </li>
+                      {% else %}
                       <li class="nav-item">
-                        <a class="nav-link active" href="{{ path('tag_new') }}">Créer un badge</a>
+                        <a class="nav-link active" href="{{ path('app_login') }}">Connexion</a>
                       </li>
-
+                      <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('app_register') }}">Inscription</a>
+                      </li>
+                      {% endif %}
                     </ul>
                   </div>
                 </div>
