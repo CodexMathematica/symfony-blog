@@ -28,7 +28,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/categorie/{slug}", name="category_show")
+     * @Route("/admin/categorie/{slug}", name="category_show")
      */
     public function show(CategoryRepository $repo, string $slug): Response
     {
@@ -40,7 +40,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/supprimer-categorie/{slug}", name="category_delete")
+     * @Route("/admin/supprimer-categorie/{slug}", name="category_delete")
      */
     public function delete(EntityManagerInterface $em, Category $cat): Response
     {
@@ -56,7 +56,7 @@ class CategoryController extends AbstractController
     }
 
      /**
-     * @Route("/nouvelle-categorie", name="category_new")
+     * @Route("/admin/nouvelle-categorie", name="category_new")
      */
     public function new(EntityManagerInterface $em, Request $request, SluggerInterface $slugger): Response
     {
@@ -88,7 +88,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/modifier-categorie/{slug}", name="category_edit")
+     * @Route("/admin/modifier-categorie/{slug}", name="category_edit")
      */
     public function edit(Category $category, Request $request, EntityManagerInterface $em): Response
     {

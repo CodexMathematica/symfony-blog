@@ -27,7 +27,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * @Route("/creation-de-badges", name="tag_new")
+     * @Route("/admin/creation-de-badges", name="tag_new")
      */
     public function new(Request $request, EntityManagerInterface $em): Response
     {
@@ -58,7 +58,7 @@ class TagController extends AbstractController
     }
 
     /**
-     * @Route("/modifier-badge/{id}", name="tag_edit")
+     * @Route("/admin/modifier-badge/{id}", name="tag_edit")
      */
     public function edit(Request $request, Tag $tag, EntityManagerInterface $em): Response
     {
@@ -85,7 +85,7 @@ class TagController extends AbstractController
     }
 
         /**
-     * @Route("/supprimer-badge/{id}", name="tag_delete")
+     * @Route("/admin/supprimer-badge/{id}", name="tag_delete")
      */
     public function delete(Tag $tag, EntityManagerInterface $em): Response
     {
