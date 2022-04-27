@@ -2,26 +2,37 @@
 
 namespace App\Controller;
 
-use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 class MailerController extends AbstractController
 {
     /**
      * @Route("/mailer", name="app_mailer")
      */
-    public function mailer(MailerInterface $mailer): Response
+    public function mailer(MailerInterface $mailer, Security $security): Response
     {
-
-        $email = (new Email())
-            ->from('hello@example.com')
-            ->to('you@example.com')
-            ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
+        $user = $security->getUser();
+        $username = $user->getName();
+        $userMail = $user->getUserIdentifier();
+        $email = (new TemplatedEmail())
+        ->from('contact@example.com')
+        ->to('admin@example.com')
+        ->subject('Demande de suppression de compte')
+    
+        // path of the Twig template to render
+        ->htmlTemplate('mailer/index.html.twig')
+    
+        // pass variables (name => value) to the template
+        ->context([
+            'username' => $username,
+            'userEmail' => $userMail
+        ])
+    ;
 
         $mailer->send($email);
 
