@@ -54,6 +54,9 @@
                       <li class="nav-item">
                         <a class="nav-link active" href="{{ path('tag_list') }}">Liste des badges</a>
                       </li>
+                      <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('profil_show', {'slug': app.user.slug}) }}">Mon profile</a>
+                      </li>
                         <li class="nav-item">
                           <a class="nav-link active" href="{{ path('app_logout') }}">Déconnexion</a>
                         </li>
