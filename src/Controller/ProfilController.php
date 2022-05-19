@@ -41,7 +41,7 @@ class ProfilController extends AbstractController
         {
             $avatarFile = $form->get('avatar')->getData();
             if ($avatarFile->getClientOriginalName()) {
-                if($avatarFile !== 'default.png'){
+                if($oldAvatar !== 'default.png'){
                     $fileUploader->fileDelete($oldAvatar);
                 }
                 $avatarFileName = $fileUploader->upload($avatarFile);
